@@ -1,1 +1,22 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
 
+bool compare(int i,int j){
+	
+	return (i>j);
+}
+
+int main() {
+	// your code goes here
+	int data[]={10,20,9,30,50};
+
+	//Front ptr ,End ptr,Compare	
+	sort(data,data+5,compare);
+	
+	for(int i=0;i<5;++i){
+		
+		cout<<" "<<data[i];
+	}
+	return 0;
+}
