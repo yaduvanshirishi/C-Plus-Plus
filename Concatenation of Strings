@@ -1,0 +1,15 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	// your code goes here
+	string s1="Hello ";
+	string s2="WORLD";
+	//char s3[30];
+	
+	string str = s1+s2;
+	
+	cout<<str;
+	return 0;
+}
