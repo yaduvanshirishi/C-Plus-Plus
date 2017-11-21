@@ -1,0 +1,19 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+#define MAX 100
+
+int main() {
+	// your code goes here
+	int n;
+	int sum=0;
+	vector<int> arr(MAX);
+	cout <<"Number of elements"<<endl;
+	cin >>n;
+	for(int i=1;i<=n;i++){
+	arr[i] = i;
+	sum += arr[i];
+	}
+	cout<<"Array sum is "<<sum<<endl;
+	return 0;
+}
