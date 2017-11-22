@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int refer(const int &x){
+/*	++x;  
+
+it give error prog.cpp: In function ‘int refer(const int&)’:
+prog.cpp:5:4: error: increment of read-only reference ‘x’
+  ++x;
+    ^
+*/
+	return (x+1);
+}
+int main() {
+	// your code goes here
+	int a=10,b;
+	b=refer(a);
+	cout <<"a = " <<a<<" b = "<<b<<endl;
+	return 0;
+}
