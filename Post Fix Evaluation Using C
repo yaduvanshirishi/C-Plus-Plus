@@ -1,0 +1,70 @@
+//OBJECTIVE
+/*
+1-Define stack
+2-Check Empty
+3-Return top element
+4-Push elements in stack
+5-Pop elements from stack
+6-main()
+*/
+
+#include <stdio.h>
+#include <ctype.h>
+
+//Stack template
+
+typedef struct stack{
+	
+	char data[100];
+	int top; //Marker for top
+}stack;
+
+//Empty check
+
+int empty(stack *p){
+	
+	return(p->top == -1); //(*p).top== -1
+	
+}
+
+//Return top 
+int top(stack *p){
+	
+	return p->data[p->top];
+}
+//Push elements
+void push(stack *p,char x){
+	
+	p->data[++(p->top)]=x;
+}
+//Pop elements 
+void pop(stack *p){
+	if(!empty(p)){
+		p->top = p->top -1;
+	}
+}
+
+void main() {
+	// your code goes here
+	stack s;
+	s.top =-1;
+	char postfix[]={'1','2','3','*','+','4','-','\0'};
+	int i, op1,op2;
+	for(i=0;i<7;i++){
+		char ch = postfix[i];
+		if(isdigit(ch)) push(&s,ch-'0');
+		else{
+			op2=top(&s);pop(&s);
+			op1=top(&s);pop(&s);
+			switch (ch){
+				case '+':push(&s,op1 + op2);break;
+				case '-':push(&s,op1 - op2);break;
+				case '*':push(&s,op1 * op2);break;
+				case '/':push(&s,op1 / op2);break;
+			}
+		}
+	}
+	printf("Evaluation of Postfix expression");
+	printf(" %d ",top(&s));
+	
+}
