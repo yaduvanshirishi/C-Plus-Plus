@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+void function(int& b,int c);
+
+int main() {
+	// your code goes here
+	int a = 20;
+	cout <<"a = " <<a<<" &a = "<<&a<<endl<<endl;
+	function(a,a);
+	return 0;
+}
+
+void function(int& b,int c){
+	
+	cout <<"b = " <<b<<" &b = "<<&b<<endl<<endl;
+	cout <<"c = " <<c<<" &c = "<<&c<<endl<<endl;
+}
