@@ -1,0 +1,28 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+	// your code goes here
+	stack<int> s;
+	char postfix[]={'1','2','3','*','+','4','-','\0'};
+	char ch;
+	for(int i=0;i<7;i++){
+		ch = postfix[i];
+		if(isdigit(ch)) s.push(ch-'0');
+		else{
+			int op2=s.top();s.pop();
+			int op1=s.top();s.pop();
+			switch (ch){
+				case '+':s.push(op1 + op2);break;
+				case '-':s.push(op1 - op2);break;
+				case '*':s.push(op1 * op2);break;
+				case '/':s.push(op1 / op2);break;
+			}
+		}
+	}
+	cout<<"Evaluation of Postfix expression"<<endl;
+	cout<<s.top();
+	return 0;
+	
+}
