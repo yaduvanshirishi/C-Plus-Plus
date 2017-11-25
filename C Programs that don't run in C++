@@ -1,0 +1,53 @@
+1) In C++, it is a compiler error to call a function before it is declared. But in C, it may compile 
+
+#include<iostream>
+int main()
+{
+   foo(); // foo() is called before its declaration/definition
+} 
+ 
+int foo()
+{
+   printf("Hello");
+   return 0; 
+}
+
+2) In C++, it is compiler error to make a normal pointer to point a const variable, but it is allowed in C.
+
+#include <iostream> 
+int main(void)
+{
+    int const j = 20;
+ 
+    /* The below assignment is invalid in C++, results in error
+       In C, the compiler *may* throw a warning, but casting is
+       implicitly allowed */
+    int *ptr = &j;  // A normal pointer points to const
+ 
+    printf("*ptr: %d\n", *ptr);
+ 
+    return 0;
+}
+
+3) In C, a void pointer can directly be assigned to some other pointer like int *, char *. But in C++, a void pointer must be explicitly typcasted.
+
+#include <iostream>
+int main()
+{
+   void *vptr;
+   int *iptr = vptr; //In C++, it must be replaced with int *iptr=(int *)vptr; 
+   return 0;
+}
+
+4) Some programs compiles & runs fine in C, but fails in compilation in C++. const variable in C++ must be initialized but in c it isn’t necessary
+given as below and error is (error: uninitialized const ‘a’ [-fpermissive])
+
+#include <iostream>
+int main()
+{
+    const int value;   // LINE 4
+    return 0;
+}
+
+5)We can use one of the C++ specific keywords as variable names. The program won’t compile in C++, but would compiler in C.
+6)6) C++ does more strict type checking than C
