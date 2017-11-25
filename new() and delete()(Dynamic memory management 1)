@@ -1,0 +1,23 @@
+//new() and delete()
+#include<iostream>
+using namespace std;
+int main(){
+  int *p=new int(5);//initialized one
+  //int *p=new int; uninitialized one
+  //*p=5;
+  cout<<*p<<endl;
+  return 0;
+}
+
+
+//Operator new and operator delete
+
+#include<iostream>
+using namespace std;
+int main(){
+  int *p=(int *)operator new(sizeof(int));
+  *p=5;
+  cout<<*p;
+  return 0;
+}
+
