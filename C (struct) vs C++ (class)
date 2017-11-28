@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+typedef struct { // struct Point
+int x; int y;
+} Point;
+
+typedef struct { // Rect uses Point
+Point TL; // Top-Left
+Point BR; // Bottom-Right
+} Rect;
+
+int main() {
+Rect r = {{0,2}, {5,7}};
+// r.TL <-- {0,2}; r.BR <-- {5,7}
+// r.TL.x <-- 0; r.TL.y <-- 2
+// Members of structure r accessed
+printf("[(%d %d) (%d %d)]",r.TL.x, r.TL.y, r.BR.x, r.BR.y);
+return 0;
+}
+
+
+#include <iostream>
+
+using namespace std;
+class Point { public: // class Point
+int x; int y; // Data members
+};
+
+class Rect { public: // Rect uses Point
+Point TL; // Top-Left
+Point BR; // Bottom-Right
+};
+
+int main() {
+Rect r = {{0,2}, {5,7}};
+// r.TL <-- {0,2}; r.BR <-- {5,7}
+// r.TL.x <-- 0; r.TL.y <-- 2
+// Rectangle Object r accessed
+cout << "[(" << r.TL.x << " " << r.TL.y <<") (" << r.BR.x << " " << r.BR.y << ")]";
+return 0;
+}
+
+Output : -[(0 2) (5 7)]
