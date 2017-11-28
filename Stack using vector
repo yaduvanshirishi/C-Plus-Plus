@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Stack {
+public:
+ vector<char> data_;
+ int top_;
+public:
+ int empty() {
+   return (top_ == -1);
+  }
+ void push(char x) {
+    data_[++top_] = x;
+  }
+ void pop() {
+    --top_;
+  }
+ char top() {
+    return data_[top_];
+   }
+};
+int main() {
+Stack s;
+char str[10] = "ABCDE";
+s.data_.resize(100); // Exposed Init
+s.top_ = -1; // Exposed Init
+for(int i = 0; i < 5; ++i)
+  s.push(str[i]);
+while (!s.empty()) {
+cout << s.top();
+  s.pop();
+  } // Outputs: EDCBA -- Reversed string
+return 0;
+}
