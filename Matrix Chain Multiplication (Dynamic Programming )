@@ -1,0 +1,41 @@
+When designing a dynamic programming algorithm
+there are two parts:
+1. Finding an appropriate optimal substructure property
+and corresponding recurrence relation on table
+items.
+
+2. Filling in the table properly.
+This requires finding an ordering of the table elements
+so that when a table item is calculated
+using the recurrence relation, all the table values
+needed by the recurrence relation have already
+been calculated.
+In our example this means that by the time
+is calculated all of the values
+Refer this link for example :-
+https://home.cse.ust.hk/~dekai/271/notes/L12/L12.pdf
+
+#include<iostream>
+#include<climits>
+using namespace std;
+int matrix(int a[],int i,int j);
+int matrix(int a[],int i,int j){
+  if(i==j)
+  return 0;
+  int k;
+  int min=INT_MAX;
+  int count;
+  for(k=i;k<j;k++){
+    count=matrix(a,i,k)+matrix(a,k+1,j)+a[i-1]*a[k]*a[j];
+    if(count<min)
+    min = count;
+  }
+  return min;
+}
+int main(){
+  int arr[]={5, 4, 6, 2, 7};
+  int size=sizeof(arr)/sizeof(arr[0]);
+  cout<<matrix(arr,1,size-1)<<endl;
+}
+
+
