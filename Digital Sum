@@ -1,0 +1,22 @@
+//1234 = 1+2+3+4=10 = 1+0 = 0 single digit value
+#include<iostream>
+using namespace std;
+int digital_root(long int n,long int sum);
+int digital_root(long int n,long int sum){
+  while(n>9){
+    sum=0;
+    while (n>0){
+      sum+=n%10;
+      n=n/10;
+    }
+    n=sum;
+    cout<<sum<<endl;
+  }
+  return 0;
+}
+int main(){
+  long int sum=0,n;
+  cin>>n;
+  digital_root(n,sum);
+  return 0;
+}
