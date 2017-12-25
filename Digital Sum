@@ -10,8 +10,8 @@ int digital_root(long int n,long int sum){
       n=n/10;
     }
     n=sum;
-    cout<<sum<<endl;
   }
+  cout<<sum<<endl;
   return 0;
 }
 int main(){
