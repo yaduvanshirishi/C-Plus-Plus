@@ -9,10 +9,11 @@ int enter_numbers(int m){
     cin>>p[i];
   }
   selection_sort(p,m);
-  cout<<"Sorted numbers"<<endl;
+  cout<<"SOrted numbers"<<endl;
   for(int i=0;i<m;i++){
     cout<<p[i]<<" ";
   }
+  cout<<endl;
   return 0;
 }
 int swap(int *arr,int start,int end){
@@ -29,6 +30,12 @@ int selection_sort(int *arr,int n){
       if(arr[minpos]>arr[j]){
         minpos=j;
       }
+      //after this comment 5 lines are optional it's just used to know inside loop processing
+      cout<<"Sorted numbers"<<startpos<<endl;
+      for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+      }
+      cout<<endl;
     }
     swap(arr,startpos,minpos);
   }
