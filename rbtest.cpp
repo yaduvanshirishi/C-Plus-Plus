@@ -17,10 +17,14 @@ public:
     Node(int val) : val(val)
     {
         parent = left = right = NULL;
-
         // Node is created during insertion
         // By default Node is RED
         color = RED;
+    }
+    // check if node is left child of parent
+    bool isOnLeft()
+    {
+        return this == parent->left;
     }
 
     Node *uncle()
@@ -35,12 +39,6 @@ public:
         else
             // uncle on left
             return parent->parent->left;
-    }
-
-    // check if node is left child of parent
-    bool isOnLeft()
-    {
-        return this == parent->left;
     }
 
     // returns pointer to sibling
@@ -82,48 +80,54 @@ class RBTree
     Node *root;
 
     // left rotates the given node
-    void leftRotate(Node *x)
+    void leftRotate(Node *pt)
     {
         // new parent will be node's right child
-        Node *nParent = x->right;
+        Node *pt_right = pt->right;
 
-        // update root if current node is root
-        if (x == root)
-            root = nParent;
+        pt->right = pt_right->left;
 
-        x->moveDown(nParent);
+        if (pt->right != NULL)
+            pt->right->parent = pt;
 
-        // connect x with new parent's left element
-        x->right = nParent->left;
-        // connect new parent's left element with node
-        // if it is not null
-        if (nParent->left != NULL)
-            nParent->left->parent = x;
+        pt_right->parent = pt->parent;
 
-        // connect new parent with x
-        nParent->left = x;
+        if (pt->parent == NULL)
+            root = pt_right;
+
+        else if (pt == pt->parent->left)
+            pt->parent->left = pt_right;
+
+        else
+            pt->parent->right = pt_right;
+
+        pt_right->left = pt;
+        pt->parent = pt_right;
     }
 
-    void rightRotate(Node *x)
+    void rightRotate(Node *pt)
     {
         // new parent will be node's left child
-        Node *nParent = x->left;
+        Node *pt_left = pt->left;
 
-        // update root if current node is root
-        if (x == root)
-            root = nParent;
+        pt->left = pt_left->right;
 
-        x->moveDown(nParent);
+        if (pt->left != NULL)
+            pt->left->parent = pt;
 
-        // connect x with new parent's right element
-        x->left = nParent->right;
-        // connect new parent's right element with node
-        // if it is not null
-        if (nParent->right != NULL)
-            nParent->right->parent = x;
+        pt_left->parent = pt->parent;
 
-        // connect new parent with x
-        nParent->right = x;
+        if (pt->parent == NULL)
+            root = pt_left;
+
+        else if (pt == pt->parent->left)
+            pt->parent->left = pt_left;
+
+        else
+            pt->parent->right = pt_left;
+
+        pt_left->right = pt;
+        pt->parent = pt_left;
     }
 
     void swapColors(Node *x1, Node *x2)
@@ -216,31 +220,31 @@ class RBTree
         return temp;
     }
 
-    // find node that replaces a deleted node in BST
-    Node *BSTreplace(Node *x)
+    // Find node that replaces a deleted node in tree
+    Node *BSTNodeReplace(Node *x)
     {
         // when node have 2 children
         if (x->left != NULL and x->right != NULL)
             return successor(x->right);
 
-        // when leaf
+        // when leaf we don't not need to do anything
         if (x->left == NULL and x->right == NULL)
             return NULL;
 
         // when single child
         if (x->left != NULL)
-            return x->left;
+            return x->left; //If left node then return left
         else
-            return x->right;
+            return x->right; //Else return right
     }
 
-    // deletes the given node
+    // Utitlity function to delete a node
     void deleteNode(Node *v)
     {
-        Node *u = BSTreplace(v);
+        Node *u = BSTNodeReplace(v);
 
         // True when u and v are both black
-        bool uvBlack = ((u == NULL or u->color == BLACK) and (v->color == BLACK));
+        bool uvBlack = ((u == NULL || u->color == BLACK) && (v->color == BLACK));
         Node *parent = v->parent;
 
         if (u == NULL)
@@ -410,9 +414,9 @@ class RBTree
     }
 
     // prints level order for given node
-    void levelOrder(Node *x)
+    void levelOrder(Node *ptr)
     {
-        if (x == NULL)
+        if (ptr == NULL)
             // return if node is null
             return;
 
@@ -421,7 +425,7 @@ class RBTree
         Node *curr;
 
         // push x
-        q.push(x);
+        q.push(ptr);
 
         while (!q.empty())
         {
@@ -467,19 +471,19 @@ public:
     // searches for given value
     // if found returns the node (used for delete)
     // else returns the last node while traversing (used in insert)
-    Node *search(int n)
+    Node *search(int key)
     {
         Node *temp = root;
         while (temp != NULL)
         {
-            if (n < temp->val)
+            if (key < temp->val)
             {
                 if (temp->left == NULL)
                     break;
                 else
                     temp = temp->left;
             }
-            else if (n == temp->val)
+            else if (key == temp->val)
             {
                 break;
             }
@@ -509,17 +513,11 @@ public:
         else
         {
             Node *temp = search(n);
-
+            // return if value already exists
             if (temp->val == n)
-            {
-                // return if value already exists
                 return;
-            }
-
             // if value is not found, search returns the node
             // where the value is to be inserted
-
-            // connect new node to correct node
             newNode->parent = temp;
 
             if (n < temp->val)
@@ -527,7 +525,7 @@ public:
             else
                 temp->right = newNode;
 
-            // fix red red voilaton if exists
+            // fix Red Red Conflict if exists
             fixRedRed(newNode);
         }
     }
@@ -543,10 +541,9 @@ public:
 
         if (v->val != n)
         {
-            cout << "No node found to delete with value:" << n << endl;
+            cout << "Node not found to delete:" << n << "\n";
             return;
         }
-
         deleteNode(v);
     }
 
@@ -585,9 +582,10 @@ int main()
         cout << "-----------------------\n\n";
         cout << "1 - Insert\n";
         cout << "2 - Level Order Traversal\n";
-        cout << "3 - Searching\n";
-        cout << "4 - Deletion\n";
-        cout << "5 - Exit\n";
+        cout << "3 - Inorder Traversal\n";
+        cout << "4 - Searching\n";
+        cout << "5 - Deletion\n";
+        cout << "6 - Exit\n";
 
         int choice;
         cout << "Enter your choice:";
@@ -614,6 +612,11 @@ int main()
             break;
 
         case 3:
+            cout << "\nInorder Traversal of Created Tree:\n";
+            tree.printInOrder();
+            break;
+
+        case 4:
             cout << "\nEnter the element you want to search:";
             int val;
             cin >> val;
@@ -624,7 +627,7 @@ int main()
                 cout << "\nNot Found\n";
             break;
 
-        case 4:
+        case 5:
             cout << "\nEnter the element you want to delete!:";
             cin >> val;
             tree.deleteByVal(val);
