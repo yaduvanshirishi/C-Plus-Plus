@@ -634,7 +634,7 @@ int main()
             break;
 
         default:
-            cout << "\nGood bye..\n";
+            cout << "\nGood bye...\n";
             enter = false;
         }
     }
